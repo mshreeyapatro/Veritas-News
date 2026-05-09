@@ -1,6 +1,7 @@
 const NewsArticle = require('../models/NewsArticle');
 
-const ML_API_URL = 'http://127.0.0.1:8000/api/analyze';
+const ML_BASE_URL = process.env.ML_SERVICE_URL || 'http://127.0.0.1:8000';
+const ML_API_URL = `${ML_BASE_URL}/api/analyze`;
 
 exports.getAllArticles = async (req, res) => {
   try {
@@ -163,7 +164,7 @@ exports.getRecommendations = async (req, res) => {
     // Call ML service
     let recommendedIds = [];
     try {
-      const resp = await fetch('http://127.0.0.1:8000/api/recommend', {
+      const resp = await fetch(`${ML_BASE_URL}/api/recommend`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
